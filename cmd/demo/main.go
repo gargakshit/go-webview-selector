@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/jchv/go-webview-selector"
+	"github.com/gargakshit/go-webview-selector"
 )
 
 func main() {

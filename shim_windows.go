@@ -3,6 +3,7 @@
 package webview
 
 import (
+	"syscall"
 	"unsafe"
 
 	"github.com/jchv/go-webview2"
@@ -26,8 +27,19 @@ const (
 	HintMax
 )
 
+// scale enables High DPI support on windows. The go-webview2 library doesn't
+// do this OOTB
+func scale() {
+	modshcore := syscall.NewLazyDLL("Shcore.dll")
+	shc := modshcore.NewProc("SetProcessDpiAwareness")
+	shc.Call(uintptr(1))
+}
+
 // New creates a new webview in a new window.
 func New(debug bool) WebView {
+	// Enable High DPI
+	scale()
+
 	return webview2.New(debug)
 }
 
